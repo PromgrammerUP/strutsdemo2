@@ -2,6 +2,7 @@ package org.javachina.framework.struts.core;
 
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -15,6 +16,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.javachina.framework.struts.action.ActionForm;
+import org.javachina.framework.struts.configparser.StrutsConfigParser;
+import org.javachina.framework.struts.model.ActionModel;
 import org.javachina.login.view.LoginAction;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -52,56 +56,18 @@ public class ActionServlet extends HttpServlet {
 		this.doRequest(request, response); 
 	}
 	public void doRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String act = request.getParameter("act");
-//		if(act.equals("login")){
-//			LoginAction login = new LoginAction();
-//			login.execute(request, response);
-//		}
-		//第一次调用时，struts-config.xml已经解析完毕
-		ServletContext application = this.getServletContext();
-		Map<String,String> map = (Map)application.getAttribute("actions");
-		//System.out.println(map);
-		if(map.containsKey(act)){
-			String type = map.get(act);
-			try {
-				Class clazz = Class.forName(type);
-				Object obj = clazz.newInstance();
-				Method exe = clazz.getDeclaredMethod("execute", HttpServletRequest.class,HttpServletResponse.class);
-				exe.invoke(obj, request,response);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				System.out.println("action路径未找到"+type);
-			} 
-			
-			
-		}else{
-			System.out.println("本次http请求"+act+"未找到");
-		}
+		//创建一个请求处理器
+		RequestProcesser processer = new RequestProcesser();
+		//请求处理器处理请求
+		processer.process(request, response);
 	}
 	/*
 	 * 解析xml,并存放入servletcontext
 	 */
 	public void init() throws ServletException {
 		// TODO Auto-generated method stub
-		Map<String, String> map = new HashMap<String,String>();
-		SAXBuilder builder = new SAXBuilder();
-		Document doc =null;
-		try {
-			doc = builder.build("D:\\mywork01\\eclipseMarsWork\\strutsdemo2\\WebContent\\WEB-INF\\struts-config.xml");
-		} catch (Exception e1) {
-			System.err.println("配置文件未找到……");
-		}
-		System.out.println("struts-config.xml文件解析开始……");
-		Element root = doc.getRootElement();
-		Element actionMappings = root.getChild("action-mappings");
-		List<Element> actions = actionMappings.getChildren("action");
-		for (Element e : actions) {
-			String path = e.getAttributeValue("path");
-			//System.out.println(path);
-			String type = e.getAttributeValue("type");
-			map.put(path, type);
-		}
-		System.out.println("struts-config.xml文件解析结束……");
+		//"D:\\mywork01\\eclipseMarsWork\\strutsdemo2\\WebContent\\WEB-INF\\struts-config.xml"
+		Map<String, ActionModel> map = StrutsConfigParser.parser("D:\\mywork01\\eclipseMarsWork\\strutsdemo2\\WebContent\\WEB-INF\\struts-config.xml");
 		//把解析后的结果存储到servletcontext--->application中
 		ServletContext application = this.getServletContext();
 		application.setAttribute("actions", map);
