@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <struts-config>
 	<form-beans>
-		<form-bean name="loginForm" type="org.javachina.framework.view.LoginForm"/>
+		<form-bean name="loginForm" type="org.javachina.login.view.LoginForm"/>
 	</form-beans>
 	<action-mappings>
 		<action path="login" type="org.javachina.login.view.LoginAction" name="loginForm"/>

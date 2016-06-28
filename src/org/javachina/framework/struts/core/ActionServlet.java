@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -67,7 +68,11 @@ public class ActionServlet extends HttpServlet {
 	public void init() throws ServletException {
 		// TODO Auto-generated method stub
 		//"D:\\mywork01\\eclipseMarsWork\\strutsdemo2\\WebContent\\WEB-INF\\struts-config.xml"
-		Map<String, ActionModel> map = StrutsConfigParser.parser("D:\\mywork01\\eclipseMarsWork\\strutsdemo2\\WebContent\\WEB-INF\\struts-config.xml");
+		String path = this.getInitParameter("struts-config");
+		String cpath = this.getServletContext().getRealPath("/");
+		System.out.println(cpath);
+		System.out.println(path);
+		Map<String, ActionModel> map = StrutsConfigParser.parser(cpath+path);
 		//把解析后的结果存储到servletcontext--->application中
 		ServletContext application = this.getServletContext();
 		application.setAttribute("actions", map);

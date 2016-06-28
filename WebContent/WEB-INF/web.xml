@@ -12,6 +12,10 @@
   <servlet>
   	<servlet-name>ActionServ</servlet-name>
   	<servlet-class>org.javachina.framework.struts.core.ActionServlet</servlet-class>
+  	<init-param>
+  		<param-name>struts-config</param-name>
+  		<param-value>/WEB-INF/struts-config.xml</param-value>
+  	</init-param>
   	<load-on-startup>0</load-on-startup>
   </servlet>
   <servlet-mapping>

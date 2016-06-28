@@ -9,7 +9,7 @@
 <body>
 	<form action="<%=request.getContextPath()  %>/action" method="post">
 		<input type="hidden" name="act" value="login">
-		用户<input type="text" name="userid">
+		用户<input type="text" name="userId">
 		密码<input type="password" name="pwd">
 		<input type="submit" value="登录">
 	</form>

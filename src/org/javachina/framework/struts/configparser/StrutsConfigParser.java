@@ -23,7 +23,7 @@ public class StrutsConfigParser {
 		Element root = doc.getRootElement();
 		//解析form-beans
 		Element formBeans = root.getChild("form-beans");
-		List<Element> beans = root.getChildren("form-bean");
+		List<Element> beans = formBeans.getChildren("form-bean");
 		Map<String, String> beanMap = new HashMap<String, String>();
 		for (Element bean : beans) {
 			String name = bean.getAttributeValue("name");
@@ -47,7 +47,9 @@ public class StrutsConfigParser {
 			model.setPath(path);
 			model.setType(type);
 			map.put(path, model);
+			//System.out.println(model.getBeanType());
 		}
+		
 		System.out.println("struts-config.xml文件解析结束……");
 		return map;
 	}
