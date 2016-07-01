@@ -4,6 +4,6 @@
 		<form-bean name="loginForm" type="org.javachina.login.view.LoginForm"/>
 	</form-beans>
 	<action-mappings>
-		<action path="login" type="org.javachina.login.view.LoginAction" name="loginForm"/>
+		<action path="/login" type="org.javachina.login.view.LoginAction" name="loginForm"/>
 	</action-mappings>
 </struts-config>

@@ -12,9 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.javachina.framework.struts.action.ActionForm;
 import org.javachina.framework.struts.model.ActionModel;
 
+import sun.org.mozilla.javascript.internal.regexp.SubString;
+
 public class RequestProcesser {
 	public void process(HttpServletRequest request, HttpServletResponse response){
-		String act = request.getParameter("act");
+		//String act = request.getParameter("act");
+		String path = request.getRequestURI();
+		String act = path.substring(path.lastIndexOf("/"), path.lastIndexOf("."));
 //		if(act.equals("login")){
 //			LoginAction login = new LoginAction();
 //			login.execute(request, response);
