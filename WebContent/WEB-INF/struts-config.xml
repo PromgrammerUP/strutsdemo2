@@ -4,6 +4,7 @@
 		<form-bean name="loginForm" type="org.javachina.login.view.LoginForm"/>
 	</form-beans>
 	<action-mappings>
-		<action path="/login" type="org.javachina.login.view.LoginAction" name="loginForm"/>
+	<!-- scope如果配置，则执行session.setAttribute(name,form) ,负责执行scope(值).setAttritute(name,form)-->
+		<action path="/login" type="org.javachina.login.view.LoginAction" name="loginForm" scope="request"/>
 	</action-mappings>
 </struts-config>

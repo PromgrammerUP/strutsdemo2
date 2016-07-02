@@ -1,3 +1,4 @@
+<%@page import="org.javachina.login.view.LoginForm"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -7,6 +8,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-	成功！
+	<%
+	LoginForm form = (LoginForm)request.getAttribute("loginForm");
+	String uid = form.getUserId();
+	%>
+	
+	<%=uid %>成功
 </body>
 </html>

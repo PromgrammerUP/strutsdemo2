@@ -40,9 +40,13 @@ public class StrutsConfigParser {
 			//System.out.println(path);
 			String type = e.getAttributeValue("type");
 			String name = e.getAttributeValue("name");
+			String scope = null;
 			if(name!=null){
 				String beanType = beanMap.get(name);
+				scope = e.getAttributeValue("scope");
 				model.setBeanType(beanType);
+				model.setScope(scope);
+				model.setName(name);
 			}
 			model.setPath(path);
 			model.setType(type);

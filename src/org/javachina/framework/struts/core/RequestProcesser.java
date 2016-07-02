@@ -32,6 +32,8 @@ public class RequestProcesser {
 			//创建form
 			String beanType = model.getBeanType();
 			String type = model.getType();
+			String formName = model.getName();
+			//System.out.println(formName);
 			//System.out.println(type+":"+beanType);
 			Object form = null;
 			
@@ -51,7 +53,12 @@ public class RequestProcesser {
 						field.set(form, value);
 						field.setAccessible(false);
 					}
-					
+					String scope = model.getScope();
+					//System.out.println(scope);
+					if("request".equals(scope)){
+						request.setAttribute(formName, form);
+						//System.out.println(formName+":"+form);
+					}
 					
 				}
 				Class clazz = Class.forName(type);
